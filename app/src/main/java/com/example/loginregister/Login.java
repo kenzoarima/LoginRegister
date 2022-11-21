@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
+import com.newrelic.agent.android.NewRelic;
+
 
 public class Login extends AppCompatActivity {
 
@@ -24,6 +26,9 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        NewRelic.withApplicationToken(
+                "<Token Key>"
+        ).start(this.getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -63,7 +68,7 @@ public class Login extends AppCompatActivity {
                             String[] data = new String[2];
                             data[0] = username;
                             data[1] = password;
-                            PutData putData = new PutData("http://<your URL>/LogIn-aSignUp/login.php", "POST", field, data);
+                            PutData putData = new PutData("https://<Your URL>/LogIn-aSignUp/login.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);
